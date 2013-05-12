@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Globalization;
 
+
 namespace CNCGUI
 {
 	public partial class MainForm : Form
@@ -845,14 +846,22 @@ namespace CNCGUI
 
 			LogAppend(string.Concat("Cmd:", cmd), Color.LightSkyBlue);
 
+            //ask for a status
+            string statusx = "{\"sr\":\"\"}\r";
+            char[] buff = new char[statusx.Length];
+            buff = statusx.ToCharArray();
+            Responses.Clear();
+            serialPort.Write(buff, 0, buff.Length);
+
+            //send the command
 			string cmdx = string.Concat(cmd, "\r");
-			char[] buff = new char[cmdx.Length];
+			buff = new char[cmdx.Length];
 			buff = cmdx.ToCharArray();
 
 			Responses.Clear();
 			serialPort.Write(buff, 0, buff.Length);
 
-			for (int timeout = 0; timeout < 1000; timeout++)
+			for (int timeout = 0; timeout < 100; timeout++)
 			{
 				while (Responses.Count > 0)
 				{
@@ -878,6 +887,8 @@ namespace CNCGUI
 						if (responses != null)
 							responses.Add(line);
 					}
+                    if(Responses.Count == 0 )
+                        return E_RESPONSE.E_OK;
 				}
 				Thread.Sleep(10);
 			}
@@ -885,7 +896,8 @@ namespace CNCGUI
 			LogGPlotDisplay();
 
 			m_auto_log = true;
-			return E_RESPONSE.E_TIMEOUT;
+            return E_RESPONSE.E_OK;
+			//return E_RESPONSE.E_TIMEOUT;
 		}
 		#endregion
 
@@ -940,12 +952,15 @@ namespace CNCGUI
 										Responses.Dequeue();
 								Responses.Enqueue(line);
 							}
-							else if (line.StartsWith("{", StringComparison.InvariantCultureIgnoreCase))
-							{
-								// JSON response string
-							}
-							else
-								GPlotAppend(line);
+                            else if (line.StartsWith("{", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                // JSON response string
+                            }
+                            else
+                            {
+                                Responses.Enqueue(line);
+                                GPlotAppend(line);
+                            }
 							LogAppend(line);
 						}
 					}

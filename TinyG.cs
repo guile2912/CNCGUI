@@ -427,4 +427,26 @@ namespace CNCGUI
 			Minor = 0;
 		}
 	}
+
+    public class StatusReport
+    {
+        //{"r":{"sr":{"line":0,"posx":0.010,"posy":0.000,"posz":-7.000,"posa":3.000,"feed":0.000,
+        //"vel":0.000,"unit":1,"coor":1,"dist":0,"frmo":0,"momo":1,"stat":3},"f":[1,0,9,588]}}
+        public string line { get; set; }
+        public float posx { get; set; }
+        public float posy { get; set; }
+        public float posz { get; set; }
+        public float posa { get; set; }
+        public float feed { get; set; }
+        public float vel { get; set; }
+        public int unit { get; set; }
+        public int coor { get; set; }
+        public int dist { get; set; }
+        public int frmo { get; set; }
+        public int momo { get; set; }
+        public int stat { get; set; }
+    }
+
+
 }
+
