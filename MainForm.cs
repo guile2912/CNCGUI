@@ -10,6 +10,7 @@ using System.IO.Ports;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Globalization;
+using Newtonsoft.Json;
 
 
 namespace CNCGUI
@@ -955,6 +956,7 @@ namespace CNCGUI
                             else if (line.StartsWith("{", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 // JSON response string
+                                Report rp = JsonConvert.DeserializeObject<Report>(line);
                             }
                             else
                             {

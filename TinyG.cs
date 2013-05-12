@@ -428,6 +428,13 @@ namespace CNCGUI
 		}
 	}
 
+    public class Report
+    {
+        public StatusReport sr { get; set; }
+        public int[] f { get; set; }
+    }
+
+
     public class StatusReport
     {
         //{"r":{"sr":{"line":0,"posx":0.010,"posy":0.000,"posz":-7.000,"posa":3.000,"feed":0.000,
