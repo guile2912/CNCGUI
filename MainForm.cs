@@ -848,15 +848,17 @@ namespace CNCGUI
 			LogAppend(string.Concat("Cmd:", cmd), Color.LightSkyBlue);
 
             //ask for a status
-            string statusx = "{\"sr\":\"\"}\r";
-            char[] buff = new char[statusx.Length];
-            buff = statusx.ToCharArray();
-            Responses.Clear();
-            serialPort.Write(buff, 0, buff.Length);
 
+            
+            string statusx = "{\"sr\":\"\"}\r";
+            char[] buffs = new char[statusx.Length];
+            buffs = statusx.ToCharArray();
+            Responses.Clear();
+            //serialPort.Write(buffs, 0, buffs.Length);
+            
             //send the command
 			string cmdx = string.Concat(cmd, "\r");
-			buff = new char[cmdx.Length];
+            char[]  buff = new char[cmdx.Length];
 			buff = cmdx.ToCharArray();
 
 			Responses.Clear();
@@ -956,7 +958,7 @@ namespace CNCGUI
                             else if (line.StartsWith("{", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 // JSON response string
-                                Report rp = JsonConvert.DeserializeObject<Report>(line);
+                                //Reception rp = JsonConvert.DeserializeObject<Reception>(line);
                             }
                             else
                             {

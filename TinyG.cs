@@ -428,6 +428,11 @@ namespace CNCGUI
 		}
 	}
 
+    public class Reception 
+    {
+        public Report r;
+    }
+
     public class Report
     {
         public StatusReport sr { get; set; }
